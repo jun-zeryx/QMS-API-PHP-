@@ -13,36 +13,32 @@ if (mysqli_connect_errno())
 
 $response = array();
 
-if (isset($_GET["user"]) && isset($_GET["pass"])) {
-	$user = $_GET['user'];
-	$pass = $_GET['pass'];
+if (isset($_GET["id"])) {
+	$id = $_GET['id'];
 
-	$pass = hash('sha256',$pass);
-
-	$sql = "SELECT * FROM merchants WHERE m_username = '$user' and m_password = '$pass'";
-
+	$sql = "SELECT * FROM tickets WHERE q_id = '$id'";
 	$result = mysqli_query($con, $sql);
 
 	if(mysqli_num_rows($result) != 0) {
 
-		$users = array();
+		$tickets = array();
 
 		while($row = $result->fetch_object())
 		{
-			$users = $row;
+			$tickets[] = $row;
 		}
 
 		$response["code"] = 0;
-		$response["msg"] = "Login success";
-		$response["userInfo"] = array();
+		$response["msg"] = "tickets retrieved successfully";
+		$response["tickets"] = array();
 
-		array_push($response["userInfo"], $users);
+		array_push($response["tickets"], $tickets);
 
 		echo json_encode($response);
 	}
 	else {
 		$response["code"] = 2;
-		$response["msg"] = "Login failed";
+		$response["msg"] = "user does not have any tickets";
 
 		echo json_encode($response);
 	}
@@ -51,9 +47,10 @@ if (isset($_GET["user"]) && isset($_GET["pass"])) {
 else {
 	$response["code"] = 1;
   $response["msg"] = "Required params missing";
-
   echo json_encode($response);
 }
+
+
 
 // Close connections
 mysqli_close($con);

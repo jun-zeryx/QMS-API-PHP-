@@ -40,10 +40,10 @@ if (isset($_GET["user"]) && isset($_GET["pass"]) && isset($_GET["mname"])) {
 }
 
 else {
-	$response["code"] = 1;
-    $response["msg"] = "Required params missing";
-
-    echo json_encode($response);
+  $response["code"] = 1;
+  $response["msg"] = "Required params missing";
+  
+  echo json_encode($response);
 }
 
 // Close connections
