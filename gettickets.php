@@ -30,9 +30,7 @@ if (isset($_GET["id"])) {
 
 		$response["code"] = 0;
 		$response["msg"] = "tickets retrieved successfully";
-		$response["tickets"] = array();
-
-		array_push($response["tickets"], $tickets);
+		$response["tickets"] = $tickets;
 
 		echo json_encode($response);
 	}

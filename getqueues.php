@@ -30,10 +30,8 @@ if (isset($_GET["id"])) {
 
 		$response["code"] = 0;
 		$response["msg"] = "queues retrieved successfully";
-		$response["queues"] = array();
-
-		array_push($response["queues"], $queues);
-
+		$response["queues"] = $queues;
+    
 		echo json_encode($response);
 	}
 	else {

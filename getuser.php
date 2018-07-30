@@ -13,10 +13,10 @@ if (mysqli_connect_errno())
 
 $response = array();
 
-if (isset($_GET["user"])) {
-	$user = $_GET['user'];
+if (isset($_GET["id"])) {
+	$id = $_GET['id'];
 
-	$sql = "SELECT * FROM users WHERE username = '$user'";
+	$sql = "SELECT * FROM users WHERE u_id = '$id'";
 	$result = mysqli_query($con, $sql);
 
 	if(mysqli_num_rows($result) != 0) {
@@ -30,9 +30,7 @@ if (isset($_GET["user"])) {
 
 		$response["code"] = 0;
 		$response["msg"] = "Username found";
-		$response["user"] = array();
-
-		array_push($response["user"], $users);
+		$response["user"] = $users;
 
 		echo json_encode($response);
 	}
