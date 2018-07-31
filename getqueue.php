@@ -13,34 +13,30 @@ if (mysqli_connect_errno())
 
 $response = array();
 
-if (isset($_GET["user"]) && isset($_GET["pass"])) {
-	$user = $_GET['user'];
-	$pass = $_GET['pass'];
+if (isset($_GET["qid"])) {
+	$qid = $_GET['qid'];
 
-	$pass = hash('sha256',$pass);
-
-	$sql = "SELECT * FROM users WHERE username = '$user' and password = '$pass'";
-
+	$sql = "SELECT * FROM queues WHERE q_id = '$qid'";
 	$result = mysqli_query($con, $sql);
 
 	if(mysqli_num_rows($result) != 0) {
 
-		$users = array();
+		$queue = array();
 
 		while($row = $result->fetch_object())
 		{
-			$users = $row;
+			$queue = $row;
 		}
 
 		$response["code"] = 0;
-		$response["msg"] = "Login success";
-		$response["userInfo"] = $users;
+		$response["msg"] = "Queue found";
+		$response["queue"] = $queue;
 
 		echo json_encode($response);
 	}
 	else {
 		$response["code"] = 2;
-		$response["msg"] = "Login failed";
+		$response["msg"] = "Queue does not exist";
 
 		echo json_encode($response);
 	}
@@ -52,6 +48,8 @@ else {
 
     echo json_encode($response);
 }
+
+
 
 // Close connections
 mysqli_close($con);

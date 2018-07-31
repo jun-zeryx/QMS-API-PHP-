@@ -12,11 +12,18 @@ if (mysqli_connect_errno())
 }
 
 $response = array();
+$sql = "";
 
-if (isset($_GET["id"])) {
-	$id = $_GET['id'];
+if (isset($_GET["qid"]) || isset($_GET["uid"])) {
+  if (isset($_GET["qid"])) {
+    $qid = $_GET['qid'];
+  	$sql = "SELECT * FROM tickets WHERE q_id = '$qid'";
+  }
+  else {
+    $uid = $_GET['uid'];
+  	$sql = "SELECT * FROM tickets WHERE u_id = '$uid'";
+  }
 
-	$sql = "SELECT * FROM tickets WHERE q_id = '$id'";
 	$result = mysqli_query($con, $sql);
 
 	if(mysqli_num_rows($result) != 0) {

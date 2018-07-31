@@ -13,34 +13,24 @@ if (mysqli_connect_errno())
 
 $response = array();
 
-if (isset($_GET["user"]) && isset($_GET["pass"])) {
-	$user = $_GET['user'];
-	$pass = $_GET['pass'];
+if (isset($_GET["mid"]) && isset($_GET["qname"])) {
+	$mid = $_GET['mid'];
+	$qname = $_GET['qname'];
 
-	$pass = hash('sha256',$pass);
-
-	$sql = "SELECT * FROM merchants WHERE m_username = '$user' and m_password = '$pass'";
+	$sql = "INSERT INTO queues VALUES (NULL,'$qname',CURRENT_TIMESTAMP,'$mid')";
 
 	$result = mysqli_query($con, $sql);
 
-	if(mysqli_num_rows($result) != 0) {
 
-		$users = array();
-
-		while($row = $result->fetch_object())
-		{
-			$users = $row;
-		}
-
+	if($result) {
 		$response["code"] = 0;
-		$response["msg"] = "Login success";
-		$response["merchantInfo"] = $users;
+		$response["msg"] = "Add queue success";
 
 		echo json_encode($response);
 	}
 	else {
-		$response["code"] = 2;
-		$response["msg"] = "Login failed";
+		$response["code"] = mysqli_errno($con);
+		$response["msg"] = mysqli_error($con);
 
 		echo json_encode($response);
 	}
