@@ -43,7 +43,7 @@ if (isset($_GET["qid"]) || isset($_GET["uid"])) {
 	}
 	else {
 		$response["code"] = 2;
-		$response["msg"] = "user does not have any tickets";
+		$response["msg"] = "user or queue does not have any tickets";
 
 		echo json_encode($response);
 	}
