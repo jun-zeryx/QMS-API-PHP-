@@ -17,7 +17,7 @@ if (isset($_GET["qid"]) && isset($_GET["uid"])) {
 	$qid = $_GET['qid'];
 	$uid = $_GET['uid'];
 
-	$sql = "INSERT INTO tickets VALUES (NULL,'$qid','$uid')";
+	$sql = "INSERT INTO tickets VALUES (NULL,'$qid','$uid',CURRENT_TIMESTAMP)";
 
 	$result = mysqli_query($con, $sql);
 
